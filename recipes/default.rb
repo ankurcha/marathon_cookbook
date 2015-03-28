@@ -27,6 +27,7 @@ include_recipe 'mesos::install'
 
 link '/usr/lib/libmesos.so' do
   to '/usr/local/lib/libmesos.so'
+  not_if { ::File.exist?('/usr/local/lib/libmesos.so') }
 end
 
 directory node['marathon']['home_dir'] do

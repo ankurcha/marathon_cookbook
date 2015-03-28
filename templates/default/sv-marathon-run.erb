@@ -12,9 +12,13 @@ ip=$(ifconfig | grep inet | grep -v inet6 | grep -v '127.0.0.1' | awk -F: '{ pri
 
 # Setup the libprocess ip
 echo "$ip" > "$environment_directory"/LIBPROCESS_IP
+echo "/usr/lib/libmesos.so" > "$environment_directory"/MESOS_NATIVE_JAVA_LIBRARY
 
-jvm_options=( -cp "$app_jar" -server -Xmx"$heap" -Xms"$heap"
-              -XX:+PrintClassHistogram
+jvm_options=( -cp "$app_jar"
+              -server
+              -Xmx"$heap"
+              -XX:+UseG1GC
+              -XX:MaxGCPauseMillis=20
               -Dfile.encoding=UTF-8
               -Djava.io.tmpdir=/tmp)
 
