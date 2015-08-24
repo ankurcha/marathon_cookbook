@@ -61,8 +61,8 @@ end
 
 remote_file "#{node['marathon']['home_dir']}/marathon.jar" do
   source node['marathon']['jar_source']
+  checksum node['marathon']['checksum']
   mode '0755'
-  not_if { ::File.exist?("#{node['marathon']['home_dir']}/marathon.jar") }
 end
 
 command_line_options_array = []
